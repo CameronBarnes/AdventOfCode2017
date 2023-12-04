@@ -13,13 +13,39 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-day_1::part1/part1      time:   [2.1882 µs 2.1953 µs 2.2046 µs]
-Found 4 outliers among 100 measurements (4.00%)
-  2 (2.00%) high mild
-  2 (2.00%) high severe
-
-day_1::part2/part2      time:   [2.1323 µs 2.1341 µs 2.1364 µs]
-Found 4 outliers among 100 measurements (4.00%)
-  1 (1.00%) high mild
+day_1::part1/part1      time:   [2.1623 µs 2.1647 µs 2.1690 µs]
+                        change: [-1.3642% -0.7816% -0.2960%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 6 outliers among 100 measurements (6.00%)
+  3 (3.00%) high mild
   3 (3.00%) high severe
+
+day_1::part2/part2      time:   [2.1079 µs 2.1087 µs 2.1095 µs]
+                        change: [-1.2798% -1.1890% -1.1135%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 3 outliers among 100 measurements (3.00%)
+  1 (1.00%) low mild
+  2 (2.00%) high mild
+
+
+running 2 tests
+ii
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+day_2::part1/part1      time:   [1.7090 µs 1.7206 µs 1.7356 µs]
+
+day_2::part2/part2      time:   [5.2981 µs 5.3015 µs 5.3052 µs]
+Found 3 outliers among 100 measurements (3.00%)
+  2 (2.00%) high mild
+  1 (1.00%) high severe
 

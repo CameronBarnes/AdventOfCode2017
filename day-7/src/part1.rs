@@ -1,4 +1,4 @@
-use std::{collections::HashMap, rc::Rc, cell::Cell};
+use std::{collections::HashMap, rc::Rc, cell::{Cell, RefCell}};
 
 
 struct PrgmHolder {
@@ -9,7 +9,7 @@ struct PrgmHolder {
 struct Prgm {
     name: String,
     weight: usize,
-    children: Vec<Rc<Cell<PrgmHolder>>>,
+    children: Vec<Rc<RefCell<PrgmHolder>>>,
 }
 
 fn parse_line(str: &str) -> (String, usize, Vec<String>) {
@@ -40,29 +40,32 @@ fn parse_line(str: &str) -> (String, usize, Vec<String>) {
 #[tracing::instrument]
 pub fn process(input: &str) -> String {
 
-    let mut map: HashMap<String, Rc<Cell<PrgmHolder>>> = HashMap::new();
+    let mut map: HashMap<String, Rc<RefCell<PrgmHolder>>> = HashMap::new();
     input.lines().map(parse_line).for_each(|(name, weight, children)| {
 
         let children = children.iter().map(|child| {
             if let Some(val) = map.get(child) {
                 val.clone()
             } else {
-                Rc::new(Cell::new(PrgmHolder{prgm: None, depth: 1}))
+                Rc::new(RefCell::new(PrgmHolder{prgm: None, depth: 1}))
             }
         }).collect();
 
         if map.contains_key(&name) {
-            map.get_mut(&name).unwrap().get_mut().prgm = Some(Prgm{name: name.clone(), weight, children});
+            map.get_mut(&name).unwrap().borrow_mut().prgm = Some(Prgm{name: name.clone(), weight, children});
         } else {
             map.insert(name.clone(), 
-                       Rc::new(Cell::new(PrgmHolder{prgm: Some(Prgm{name, weight, children}), depth: 0})));
+                       Rc::new(RefCell::new(PrgmHolder{prgm: Some(Prgm{name, weight, children}), depth: 0})));
         }
 
     });
 
-    let bottom = map.into_values().find(|holder| holder.clone().get_mut().depth == 0)
-        .unwrap().clone().get_mut().prgm.unwrap();
-    bottom.name
+    let rc_ref_t = map.into_values().find(|holder| holder.borrow().depth == 0).unwrap().clone();
+
+    let x = match &rc_ref_t.borrow().prgm {
+        Some(val) => val.name.clone(),
+        _ => panic!(),
+    }; x
 
 }
 
